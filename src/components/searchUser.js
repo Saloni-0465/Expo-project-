@@ -8,6 +8,8 @@ const searchUser = () => {
         setData(response);
         console.log(response);
     }
+
+
   return (
     <View>
         <TextInput

@@ -1,21 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  FlatList,
-  ActivityIndicator,
-  StyleSheet,
-  TextInput,
-} from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, ActivityIndicator, StyleSheet, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import PostCard from '../components/Posts';
-import { getPosts, getUsers } from '/Users/salonisharma/secondExpoProject/src/utils/api.js';
+import { getPosts, getUsers, getUserId } from '../utils/api';
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {  // Add navigation prop here
   const [posts, setPosts] = useState([]);
-  const [users, setUsers] = useState([]); 
-  const [filteredUsers, setFilteredUsers] = useState([]); 
+  const [filteredUsers, setFilteredUsers] = useState([]);
   const [loadingPosts, setLoadingPosts] = useState(true);
   const [loadingUsers, setLoadingUsers] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -34,6 +25,15 @@ const HomeScreen = () => {
 
     fetchPosts();
   }, []);
+
+  const onClickUser = async (id) => {
+    try {
+      const userData = await getUserId(id);
+      navigation.navigate('UserProfile', { user: userData }); 
+    } catch (error) {
+      console.error('Error navigating to user profile:', error);
+    }
+  };
 
   const handleSearch = async (text) => {
     setSearchQuery(text);
@@ -60,7 +60,6 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      {/* Header */}
       <View style={styles.header}>
         <Text style={styles.title}>MyApp</Text>
         <View style={styles.icons}>
@@ -76,7 +75,6 @@ const HomeScreen = () => {
         </View>
       </View>
 
-      {/* Search Bar */}
       <TextInput
         style={styles.searchBar}
         placeholder="Search users..."
@@ -84,7 +82,6 @@ const HomeScreen = () => {
         onChangeText={handleSearch}
       />
 
-      {/* Search Results */}
       {searchQuery && (
         <View style={styles.searchResults}>
           {loadingUsers ? (
@@ -94,10 +91,10 @@ const HomeScreen = () => {
               data={filteredUsers}
               keyExtractor={(item) => item.id.toString()}
               renderItem={({ item }) => (
-                <View style={styles.userItem}>
+                <TouchableOpacity onPress={() => onClickUser(item.id)} style={styles.userItem}>
                   <Text style={styles.userName}>{item.name}</Text>
                   <Text style={styles.userEmail}>{item.email}</Text>
-                </View>
+                </TouchableOpacity>
               )}
             />
           ) : (
@@ -106,7 +103,6 @@ const HomeScreen = () => {
         </View>
       )}
 
-      {/* Posts List */}
       {!searchQuery && (
         <>
           {loadingPosts ? (

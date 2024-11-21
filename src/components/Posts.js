@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native'; 
 import classname from 'twrnc';
-import { getUserId } from '/Users/salonisharma/secondExpoProject/src/utils/api.js';
+import { getUserId } from '../utils/api';
 
 const PostCard = ({ post }) => {
     const navigation = useNavigation();

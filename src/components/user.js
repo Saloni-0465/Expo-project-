@@ -25,7 +25,6 @@ const UserProfile = ({ route }) => {
 
   return (
     <ScrollView style={classname`flex-1 bg-gray-100`} contentContainerStyle={styles.container}>
-      {/* User Header */}
       <View style={styles.header}>
         <Image
           source={{ uri: `https://ui-avatars.com/api/?name=${user.name}&background=random` }}
@@ -34,8 +33,6 @@ const UserProfile = ({ route }) => {
         <Text style={styles.userName}>{user.name}</Text>
         <Text style={classname`text-gray-500 text-sm mt-1`}>{user.company.name}</Text>
       </View>
-
-      {/* Contact Information */}
       <View style={styles.infoCard}>
         <Text style={styles.sectionTitle}>Contact Information</Text>
         <Text style={styles.infoText}>📧 Email: {user.email}</Text>
@@ -43,14 +40,12 @@ const UserProfile = ({ route }) => {
         <Text style={styles.infoText}>🌐 Website: {user.website}</Text>
       </View>
 
-      {/* Address */}
       <View style={styles.infoCard}>
         <Text style={styles.sectionTitle}>Address</Text>
         <Text style={styles.infoText}>🏠 {user.address.suite}, {user.address.street}</Text>
         <Text style={styles.infoText}>📍 {user.address.city}, {user.address.zipcode}</Text>
       </View>
 
-      {/* User's Posts */}
       <View style={styles.postsSection}>
         <Text style={styles.sectionTitle}>Posts by {user.name}</Text>
         {loading ? (
